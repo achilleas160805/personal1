@@ -80,7 +80,7 @@
 
         @media (hover: none) or (max-width: 1024px) {
             .cursor-glow {
-                display: none; /* Hide glow on touch devices to avoid touch visual artifacts */
+                display: none;
             }
         }
 
@@ -137,7 +137,7 @@
         nav a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             transition: var(--transition);
@@ -163,7 +163,7 @@
            ========================================================================== */
         .hero {
             min-height: 100vh;
-            padding: 9rem 5% 4rem 5%;
+            padding: 8rem 5% 4rem 5%;
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
             align-items: center;
@@ -191,7 +191,7 @@
 
         .hero-title {
             font-family: var(--font-serif);
-            font-size: clamp(2.8rem, 6vw, 4.8rem);
+            font-size: clamp(2.6rem, 5.5vw, 4.8rem);
             font-weight: 300;
             line-height: 1.08;
             letter-spacing: -0.02em;
@@ -241,11 +241,12 @@
             letter-spacing: 0.05em;
         }
 
-        /* Image Container - Responsive Display */
+        /* Image Container - Robust Responsive Display */
         .hero-image-wrapper {
             position: relative;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             width: 100%;
         }
 
@@ -278,13 +279,14 @@
         }
 
         .image-caption {
-            position: absolute;
-            bottom: -22px;
-            right: 0;
+            margin-top: 0.8rem;
             font-size: 0.65rem;
             letter-spacing: 0.2em;
             color: var(--text-muted);
             text-transform: uppercase;
+            text-align: right;
+            width: 100%;
+            max-width: 320px;
         }
 
         /* ==========================================================================
@@ -520,13 +522,13 @@
         /* ==========================================================================
            7. ADVANCED RESPONSIVE MEDIA QUERIES (TABLET & MOBILE)
            ========================================================================== */
-        /* Tablet & IPad View (768px - 1024px) */
         @media (max-width: 1024px) {
             .hero {
                 grid-template-columns: 1fr;
                 padding-top: 7.5rem;
                 text-align: center;
                 gap: 3.5rem;
+                min-height: auto;
             }
 
             .hero-tag {
@@ -560,9 +562,12 @@
                 max-width: 290px;
                 margin: 0 auto;
             }
+
+            .image-caption {
+                text-align: center;
+            }
         }
 
-        /* Mobile Phones (< 768px) */
         @media (max-width: 768px) {
             header {
                 padding: 1.2rem 5%;
@@ -573,12 +578,12 @@
             }
 
             nav a {
-                font-size: 0.72rem;
-                letter-spacing: 0.15em;
+                font-size: 0.7rem;
+                letter-spacing: 0.12em;
             }
 
             .location-badge {
-                display: none; /* Hide badge on smartphones to save header space */
+                display: none;
             }
 
             .hero-meta {
@@ -591,17 +596,6 @@
                 flex-direction: column;
                 text-align: center;
                 justify-content: center;
-            }
-        }
-
-        /* Very Small Phones (< 400px) */
-        @media (max-width: 400px) {
-            .image-frame {
-                max-width: 250px;
-            }
-
-            .pillar-card {
-                padding: 1.8rem 1.2rem;
             }
         }
     </style>
@@ -763,7 +757,6 @@
     <script>
         const cursorGlow = document.getElementById('cursorGlow');
         
-        // Active cursor glow only for desktop pointer devices
         if (window.matchMedia('(hover: hover)').matches) {
             document.addEventListener('mousemove', (e) => {
                 cursorGlow.style.left = e.clientX + 'px';
@@ -771,7 +764,6 @@
             });
         }
 
-        // Smooth reveal animation on scroll
         const observerOptions = {
             threshold: 0.1
         };
