@@ -1,1 +1,602 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achilleas Vafopoulos — Portfolio & Curations</title>
+    <meta name="description" content="Personal portfolio of Achilleas Vafopoulos. Biomedical Scientist, Medical Writer, Web Architect & Fashion Curator based in Thessaloniki, Greece.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
 
+    <style>
+        /* --- CORE STYLES & VARIABLES --- */
+        :root {
+            --bg-dark: #0a0a0c;
+            --bg-card: #121216;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-active: rgba(212, 175, 55, 0.4);
+            --text-main: #f4f1ea;
+            --text-muted: #8e8e99;
+            --accent-gold: #d4af37;
+            --accent-champagne: #e6d7bc;
+            --font-title: 'Cormorant Garamond', serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Cinematic Noise Texture Layer */
+        .film-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.035;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Background ambient blur */
+        .ambient-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, rgba(0,0,0,0) 70%);
+            top: -100px;
+            right: -100px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 12, 0.6);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .logo {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .nav-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .time-badge {
+            color: var(--accent-gold);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            padding: 10rem 5% 4rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 4rem;
+            position: relative;
+        }
+
+        .hero-text-content {
+            z-index: 2;
+        }
+
+        .tagline {
+            font-family: var(--font-mono);
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tagline::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--accent-gold);
+        }
+
+        .hero h1 {
+            font-family: var(--font-title);
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            font-style: italic;
+            color: var(--accent-champagne);
+            font-weight: 400;
+        }
+
+        .hero-bio-short {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 580px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 1rem 2.2rem;
+            border: 1px solid var(--text-main);
+            color: var(--bg-dark);
+            background: var(--text-main);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transition: all 0.4s ease;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--text-main);
+            border-color: var(--accent-gold);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Image Styling with Editorial Frame */
+        .hero-image-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(100%) contrast(110%);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.04);
+            filter: grayscale(80%) contrast(115%);
+        }
+
+        .image-caption {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(10, 10, 12, 0.85);
+            padding: 6px 12px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--border-subtle);
+        }
+
+        /* --- SECTION COMMONS --- */
+        section {
+            padding: 8rem 5%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: var(--font-title);
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 300;
+        }
+
+        .section-num {
+            font-family: var(--font-mono);
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+        }
+
+        /* --- PILLARS / EXPERTISE GRID --- */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .pillar-card {
+            background: var(--bg-card);
+            padding: 3rem 2rem;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .pillar-card:hover {
+            border-color: var(--border-active);
+            transform: translateY(-5px);
+        }
+
+        .pillar-icon {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .pillar-card h3 {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .pillar-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* --- BIOGRAPHY / MANIFESTO --- */
+        .manifesto-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .manifesto-quote {
+            font-family: var(--font-title);
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            font-style: italic;
+            line-height: 1.3;
+            color: var(--accent-champagne);
+        }
+
+        .manifesto-text p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .meta-list {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 1.5rem;
+        }
+
+        .meta-item label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-item span {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 6rem 5% 3rem;
+            background: #060608;
+            border-top: 1px solid var(--border-subtle);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-heading {
+            font-family: var(--font-title);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .contact-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .contact-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .contact-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 2rem;
+        }
+
+        /* --- RESPONSIVE MOBILE FIXES --- */
+        @media (max-width: 900px) {
+            .hero, .manifesto-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .hero {
+                padding-top: 8rem;
+            }
+            .nav-info {
+                display: none;
+            }
+            .footer-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="film-grain"></div>
+    <div class="ambient-glow"></div>
+
+    <!-- NAVIGATION HEADER -->
+    <header>
+        <a href="#" class="logo">A. VAFOPOULOS</a>
+        <div class="nav-info">
+            <span>Thessaloniki, GR</span>
+            <span class="time-badge" id="gr-time">00:00:00 EEST</span>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-text-content">
+            <div class="tagline">Biomedicine • Curation • Web Architecture</div>
+            <h1>Achilleas<br><span>Vafopoulos.</span></h1>
+            <p class="hero-bio-short">
+                A 21-year-old Biomedical Sciences scholar bridging empirical scientific analysis, luxury fashion reselling & archival curation, and high-end cinematic web design.
+            </p>
+            <div class="cta-group">
+                <a href="#contact" class="btn-primary">Initiate Contact</a>
+                <a href="#expertise" class="btn-secondary">Explore Fields ↓</a>
+            </div>
+        </div>
+
+        <div class="hero-image-wrapper">
+            <div class="image-container">
+                <!-- PHOTO EMBEDDED HERE -->
+                <img src="profile.jpg" alt="Achilleas Vafopoulos Portrait">
+                <div class="image-caption">FIG 01. A. VAFOPOULOS</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERTISE SECTION -->
+    <section id="expertise">
+        <div class="section-header">
+            <h2 class="section-title">Core Disciplines</h2>
+            <span class="section-num">[ 01 / 03 ]</span>
+        </div>
+
+        <div class="pillars-grid">
+            <!-- Pillar 1 -->
+            <div class="pillar-card">
+                <span class="pillar-icon">01 // SCIENCE & MEDICAL WRITING</span>
+                <h3>Biomedical Sciences</h3>
+                <p>Translating complex biological data, clinical research, and scientific literature into authoritative, high-impact medical documentation and scientific journalism.</p>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="pillar-card">
+                <span class="pillar-icon">02 // ARCHIVAL CURATION</span>
+                <h3>Fashion Reselling</h3>
+                <p>Sourcing and authenticating rare, high-end designer garments. Curating rare fashion archives with a modern eye for timeless design and contemporary subculture.</p>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="pillar-card">
+                <span class="pillar-icon">03 // DIGITAL ARCHITECTURE</span>
+                <h3>Web Design & UX</h3>
+                <p>Crafting bespoke digital storefronts and editorial web experiences. Minimalist code meets luxury visual aesthetics for high-end digital identities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MANIFESTO / ABOUT SECTION -->
+    <section id="about">
+        <div class="section-header">
+            <h2 class="section-title">Perspective</h2>
+            <span class="section-num">[ 02 / 03 ]</span>
+        </div>
+
+        <div class="manifesto-container">
+            <div class="manifesto-quote">
+                "Precision in science, curation in garmentry, architecture in digital space."
+            </div>
+            <div class="manifesto-text">
+                <p>
+                    Based in Thessaloniki, Greece, my work exists at the intersection of rigorous analytical science and creative aesthetic curation. Whether dissecting complex biomedical manuscripts or identifying archival fashion garments, I prioritize meticulous detail and elevated execution.
+                </p>
+                <p>
+                    I construct digital platforms for visionaries who reject cookie-cutter templates, offering custom web solutions designed with quiet luxury and filmic warmth.
+                </p>
+
+                <div class="meta-list">
+                    <div class="meta-item">
+                        <label>Location</label>
+                        <span>Thessaloniki, GR</span>
+                    </div>
+                    <div class="meta-item">
+                        <label>Year of Birth</label>
+                        <span>2005 (Age 21)</span>
+                    </div>
+                    <div class="meta-item">
+                        <label>Focus Areas</label>
+                        <span>MedWrite • Fashion • Web</span>
+                    </div>
+                    <div class="meta-item">
+                        <label>Status</label>
+                        <span>Available for Projects</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER / CONTACT -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div>
+                <div class="tagline">Start a Conversation</div>
+                <h2 class="footer-heading">Let's build something<br>extraordinary.</h2>
+            </div>
+            <ul class="contact-links">
+                <li><a href="mailto:vafopoulosachilleas@gmail.com">Email</a></li>
+                <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+                <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+                <li><a href="https://github.com" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2026 Achilleas Vafopoulos. All rights reserved.</span>
+            <span>Designed with Cinematic Minimalism</span>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FOR REAL-TIME CLOCK -->
+    <script>
+        function updateThessalonikiTime() {
+            const timeElement = document.getElementById('gr-time');
+            const options = {
+                timeZone: 'Europe/Athens',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const formatter = new Intl.DateTimeFormat([], options);
+            timeElement.textContent = formatter.format(new Date()) + ' EEST';
+        }
+        setInterval(updateThessalonikiTime, 1000);
+        updateThessalonikiTime();
+    </script>
+</body>
+</html>
