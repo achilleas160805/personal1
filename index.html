@@ -226,7 +226,7 @@
             letter-spacing: 0.05em;
         }
 
-        /* Image Container - High-Fashion Monochrome Frame */
+        /* Image Container - Full Aspect Ratio Display */
         .hero-image-wrapper {
             position: relative;
             display: flex;
@@ -236,8 +236,7 @@
         .image-frame {
             position: relative;
             width: 100%;
-            max-width: 380px;
-            aspect-ratio: 3 / 4;
+            max-width: 340px; /* Ρυθμισμένο πλάτος για πλήρη εμφάνιση χωρίς κόψιμο */
             border-radius: 4px;
             overflow: hidden;
             border: 1px solid var(--border-color);
@@ -252,15 +251,14 @@
 
         .image-frame img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto; /* Δείχνει ολόκληρη τη φωτογραφία χωρίς crop */
+            display: block;
             filter: grayscale(100%) contrast(110%) brightness(95%);
             transition: var(--transition);
         }
 
         .image-frame:hover img {
             filter: grayscale(80%) contrast(105%) brightness(100%);
-            transform: scale(1.03);
         }
 
         .image-caption {
