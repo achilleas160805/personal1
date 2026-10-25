@@ -43,7 +43,6 @@
         ::selection { background: rgba(226, 209, 166, 0.25); color: #fff; }
         section[id] { scroll-margin-top: 90px; }
 
-        /* Scroll progress */
         .scroll-progress {
             position: fixed; top: 0; left: 0; width: 100%; height: 2px;
             background: var(--accent-gold);
@@ -211,7 +210,9 @@
 
         @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
 
-        /* Hero image */
+        /* ==========================================================================
+           HERO IMAGE — 3D scroll parallax
+           ========================================================================== */
         .hero-image-wrapper {
             position: relative;
             display: flex;
@@ -220,15 +221,24 @@
             width: 100%;
         }
 
+        /* Scroll-controlled 3D layer */
         .image-parallax {
-            will-change: transform;
             width: 100%;
             max-width: 320px;
             margin: 0 auto;
+            transform-origin: center center;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            will-change: transform;
         }
 
-        .image-frame { position: relative; width: 100%; }
+        .image-frame {
+            position: relative;
+            width: 100%;
+            transform-origin: center center;
+        }
 
+        /* Curtain reveal on load */
         .image-inner {
             position: relative;
             border-radius: 2px;
@@ -302,7 +312,6 @@
             text-transform: uppercase;
             text-align: right;
             width: 100%;
-            max-width: 320px;
             font-weight: 500;
             opacity: 0;
             transform: translateY(8px);
@@ -601,6 +610,7 @@
         .social-link:nth-child(1).is-visible { transition-delay: 0.2s, 0.2s, 0s; }
         .social-link:nth-child(2).is-visible { transition-delay: 0.32s, 0.32s, 0s; }
         .social-link:nth-child(3).is-visible { transition-delay: 0.44s, 0.44s, 0s; }
+        .social-link:nth-child(4).is-visible { transition-delay: 0.56s, 0.56s, 0s; }
 
         .footer-bottom {
             display: flex;
@@ -643,7 +653,7 @@
 
             .footer-content { flex-direction: column; gap: 3rem; }
 
-            .image-caption { text-align: center; margin-left: auto; margin-right: auto; }
+            .image-caption { text-align: center; }
         }
 
         @media (max-width: 768px) {
@@ -731,8 +741,8 @@
                         <path d="M 3 12 L 3 3 L 12 3"/>
                     </svg>
                 </div>
+                <div class="image-caption">AV — 40.6401° N</div>
             </div>
-            <div class="image-caption">AV — 40.6401° N</div>
         </div>
     </section>
 
@@ -829,6 +839,12 @@
                     </svg>
                     <span>a.vafopoulos@gmail.com</span>
                 </a>
+                <a href="tel:+306988462939" class="social-link">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M 3.5 3.2 C 3.5 3.2 5 2.8 5.2 3 L 6 5.5 L 5.1 6.4 C 5.6 8.2 7 9.5 8.8 10 L 9.7 9.1 L 12.2 9.9 C 12.4 10.1 12 11.5 12 11.5 C 11.7 12.7 10.5 13 9.5 12.8 C 6 12 3.2 9 2.4 5.5 C 2.2 4.5 2.5 3.3 3.5 3.2 Z"/>
+                    </svg>
+                    <span>+30 698 846 2939</span>
+                </a>
                 <a href="https://www.linkedin.com/in/achilleas-vafopoulos-422a3237b/" target="_blank" rel="noopener noreferrer" class="social-link">
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="2" y="2" width="12" height="12" rx="2"/>
@@ -893,14 +909,21 @@
             if (y > 40) header.classList.add('scrolled');
             else header.classList.remove('scrolled');
 
+            /* Hero image: cinematic 3D scroll — parallax + tilt + slight recede */
             if (imageParallax && window.innerWidth > 1024 && heroSection) {
                 const rect = heroSection.getBoundingClientRect();
                 if (rect.bottom > -100 && rect.top < window.innerHeight) {
                     const progress = Math.max(0, Math.min(1, -rect.top / rect.height));
-                    const translateY = progress * 55;
-                    const scale = 1 - progress * 0.03;
+
+                    const frameY  = progress * 90;      // image drifts down slower than scroll
+                    const rotateX = progress * 12;      // tilts back into depth
+                    const rotateY = progress * 4;       // subtle 3D side angle
+                    const scale   = 1 - progress * 0.04; // slight recede
+
                     imageParallax.style.transform =
-                        `translate3d(0, ${translateY}px, 0) scale(${scale})`;
+                        `perspective(1200px) translate3d(0, ${frameY}px, 0) ` +
+                        `rotateX(${rotateX}deg) rotateY(${rotateY}deg) ` +
+                        `scale(${scale})`;
                 }
             }
 
